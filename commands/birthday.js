@@ -73,7 +73,7 @@ module.exports = {
         interaction.options.getInteger("year") === null
           ? 2006
           : interaction.options.getInteger("year"),
-        interaction.options.getInteger("month"),
+        interaction.options.getInteger("month") - 1, // FIXME: correct time zone errors
         interaction.options.getInteger("day")
       );
       // Insert the person
@@ -96,7 +96,7 @@ module.exports = {
         interaction.options.getInteger("year") === null
           ? 2006
           : interaction.options.getInteger("year"),
-        interaction.options.getInteger("month"), // TODO: correct date errors
+        interaction.options.getInteger("month") - 1, // FIXME: correct time zone errors
         interaction.options.getInteger("day")
       );
       // Update the person

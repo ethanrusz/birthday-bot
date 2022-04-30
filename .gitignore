@@ -1,6 +1,9 @@
 # Config
 config.json
 
+# VSC
+.vscode/
+
 # Logs
 logs
 *.log

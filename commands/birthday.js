@@ -60,7 +60,7 @@ module.exports = {
             .setRequired(true)
         )
         .addIntegerOption((option) =>
-          option.setName("year").setDescription("Enter a year")
+          option.setName("year").setDescription("Enter a four digit year")
         )
     ),
   async execute(interaction) {
@@ -69,13 +69,14 @@ module.exports = {
       // Set user and birthday
       const user = interaction.options.getUser("user");
       // If a year wasn't set, it's 2006 now!
-      const birthday = new Date(
+      var birthday = new Date(
         interaction.options.getInteger("year") === null
           ? 2006
           : interaction.options.getInteger("year"),
-        interaction.options.getInteger("month") - 1, // FIXME: correct time zone errors
+        interaction.options.getInteger("month") - 1,
         interaction.options.getInteger("day")
       );
+      birthday.setUTCHours(0, 0, 0, 0);
       // Insert the person
       await insertPerson(user["id"], birthday);
       // Reply to whomever sent command
@@ -92,13 +93,14 @@ module.exports = {
       });
     } else if (interaction.options.getSubcommand() === "update") {
       const user = interaction.options.getUser("user");
-      const birthday = new Date(
+      var birthday = new Date(
         interaction.options.getInteger("year") === null
           ? 2006
           : interaction.options.getInteger("year"),
-        interaction.options.getInteger("month") - 1, // FIXME: correct time zone errors
+        interaction.options.getInteger("month") - 1,
         interaction.options.getInteger("day")
       );
+      birthday.setUTCHours(0, 0, 0, 0);
       // Update the person
       await updatePerson(user["id"], birthday);
       // Reply to whomever sent command

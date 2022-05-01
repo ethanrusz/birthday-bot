@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const { Client, Collection, Intents } = require("discord.js");
 const { token } = require("./config.json");
+const cron = require("node-cron");
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
@@ -16,6 +17,10 @@ for (const file of commandFiles) {
 
 client.once("ready", () => {
   console.log("Ready!");
+
+  cron.schedule("* 0 * * * *", () => {
+    console.log("Cron, yo!");
+  });
 });
 
 client.on("interactionCreate", async (interaction) => {

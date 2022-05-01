@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { SnowflakeUtil } = require("discord.js");
 const { insertPerson, removePerson, updatePerson } = require("../database.js");
 
 module.exports = {

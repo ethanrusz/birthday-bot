@@ -69,7 +69,7 @@ async function updatePerson(snowflake, birthday) {
   }
 }
 
-async function findBirthdays(day, month) {
+async function findByDate(day, month) {
   let mongoClient;
 
   try {
@@ -93,7 +93,7 @@ async function findBirthdays(day, month) {
 
     await cursor.forEach((result) => {
       birthdayIDs.push(`${result.snowflake}`);
-    }); // Get IDs from list
+    }); // Get IDs from json
 
     return birthdayIDs;
   } finally {
@@ -101,9 +101,26 @@ async function findBirthdays(day, month) {
   }
 }
 
+async function findByUser(snowflake) {
+  let mongoClient;
+
+  try {
+    mongoClient = await connectToCluster(uri);
+    const db = mongoClient.db("birthdaybot");
+    const collection = db.collection("person");
+
+    await collection.deleteOne({ snowflake: snowflake }); // Delete document by snowflake
+
+    console.log(`Removed ${snowflake}`);
+  } finally {
+    await mongoClient.close();
+  }
+} // FIXME: Find by user
+
 module.exports = {
   insertPerson,
   removePerson,
   updatePerson,
-  findBirthdays,
+  findByDate,
+  findByUser,
 };

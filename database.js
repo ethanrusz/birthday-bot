@@ -77,7 +77,7 @@ async function findByDate(day, month) {
     const db = mongoClient.db("birthdaybot");
     const collection = db.collection("person");
 
-    var birthdayIDs = [];
+    let birthdayIDs = [];
     const cursor = collection.aggregate([
       {
         $project: {
@@ -109,13 +109,15 @@ async function findByUser(snowflake) {
     const db = mongoClient.db("birthdaybot");
     const collection = db.collection("person");
 
-    await collection.deleteOne({ snowflake: snowflake }); // Delete document by snowflake
+    const birthdayID = await collection.findOne({ snowflake: snowflake }); // Find document by snowflake
 
-    console.log(`Removed ${snowflake}`);
+    return birthdayID;
   } finally {
     await mongoClient.close();
   }
 } // FIXME: Find by user
+
+findByUser("291772015965110291");
 
 module.exports = {
   insertPerson,

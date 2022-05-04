@@ -68,7 +68,7 @@ module.exports = {
       // Set user and birthday
       const user = interaction.options.getUser("user");
       // If a year wasn't set, it's 2006 now!
-      var birthday = new Date(
+      let birthday = new Date(
         interaction.options.getInteger("year") === null
           ? 2006
           : interaction.options.getInteger("year"),
@@ -92,7 +92,7 @@ module.exports = {
       });
     } else if (interaction.options.getSubcommand() === "update") {
       const user = interaction.options.getUser("user");
-      var birthday = new Date(
+      let birthday = new Date(
         interaction.options.getInteger("year") === null
           ? 2006
           : interaction.options.getInteger("year"),

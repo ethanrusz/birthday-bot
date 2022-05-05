@@ -8,7 +8,7 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("add")
-        .setDescription("Adds a birthday")
+        .setDescription("Add a birthday")
         .addUserOption((option) =>
           option
             .setName("user")
@@ -31,7 +31,7 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("remove")
-        .setDescription("Removes a birthday")
+        .setDescription("Remove a birthday")
         .addUserOption((option) =>
           option
             .setName("user")
@@ -42,7 +42,7 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("update")
-        .setDescription("Updates a birthday")
+        .setDescription("Update a birthday")
         .addUserOption((option) =>
           option
             .setName("user")

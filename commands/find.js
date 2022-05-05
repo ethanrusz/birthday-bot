@@ -22,7 +22,7 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("user")
-        .setDescription("Find birthday by user.")
+        .setDescription("Find a user's birthday")
         .addUserOption((option) =>
           option
             .setName("user")
@@ -58,7 +58,7 @@ module.exports = {
         }
       } else {
         await interaction.reply({
-          content: "There are no birthdays in the database for that day.",
+          content: "There are no birthdays registered for that day.",
           ephemeral: true,
         });
       }

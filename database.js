@@ -95,6 +95,10 @@ async function findByDate(day, month) {
       birthdayIDs.push(`${result.snowflake}`);
     }); // Get IDs from json
 
+    if (birthdayIDs.length === 0) {
+      return null;
+    }
+
     return birthdayIDs;
   } finally {
     await mongoClient.close();
@@ -110,14 +114,37 @@ async function findByUser(snowflake) {
     const collection = db.collection("person");
 
     const birthdayID = await collection.findOne({ snowflake: snowflake }); // Find document by snowflake
+    // return month name and day of birth from birthdayID no offset
 
-    return birthdayID;
+    if (birthdayID === null) {
+      return null;
+    }
+
+    const birthday = birthdayID.birthday;
+    const month = birthday.getUTCMonth();
+    const day = birthday.getUTCDate();
+
+    return {
+      month: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ][month],
+      day: day,
+    };
   } finally {
     await mongoClient.close();
   }
-} // FIXME: Find by user
-
-findByUser("291772015965110291");
+}
 
 module.exports = {
   insertPerson,

@@ -23,15 +23,8 @@ client.once("ready", () => {
   cron.schedule("0 * * * * *", async () => {
     console.log("Running cron job");
 
-    const guild = client.guilds.cache.get(guildID);
-    const role = guild.roles.cache.get(roleID);
-
-    // remove birthday role from all users
-    guild.members.cache.forEach((member) => {
-      if (member.roles.cache.has(role.id)) {
-        member.roles.remove(role);
-      }
-    });
+    // FIXME: Remove roles
+    // remove birthday roles from all users
 
     //get all users with birthdays today
     const birthdayIDs = await findByDate(
@@ -40,13 +33,7 @@ client.once("ready", () => {
     );
     if (birthdayIDs) {
       //add role roleID to users in guild guildID
-      const membersWithBirthday = guild.members.cache.filter((member) =>
-        birthdayIDs.includes(member.id)
-      );
-      membersWithBirthday.forEach((member) => {
-        member.roles.add(role);
-        // FIXME: add birthday role to other users
-      });
+      // TODO: add roles
     } else {
       console.log("No birthdays today");
     }

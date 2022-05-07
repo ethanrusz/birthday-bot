@@ -26,7 +26,7 @@ client.once("ready", () => {
   console.log("Ready!");
 
   // Nightly birthday job
-  cron.schedule("0 * * * * *", async () => {
+  cron.schedule("0 0 1 * * *", async () => {
     console.log("Running cron job");
 
     // Get guild from guildID
@@ -34,11 +34,12 @@ client.once("ready", () => {
     // Get role from roleID
     const role = guild.roles.cache.get(roleID);
 
-    // Remove birthday role from all users
+    // Remove birthday role from all users that have it
     guild.members.fetch().then((members) => {
       members.forEach((member) => {
         if (member.roles.cache.has(role.id)) {
           member.roles.remove(role.id);
+          console.log(`Removed role from ${member.id}`);
         }
       });
     });
@@ -46,7 +47,7 @@ client.once("ready", () => {
     // Get all users with birthdays today from MongoDB
     const birthdayIDs = await findByDate(
       new Date().getDate(),
-      new Date().getMonth() + 1 // month is 0-indexed
+      new Date().getMonth() + 1 // Month is 0-indexed
     );
 
     // If there are birthdays today
@@ -56,6 +57,7 @@ client.once("ready", () => {
         members.forEach((member) => {
           if (birthdayIDs.includes(member.id)) {
             member.roles.add(role.id);
+            console.log(`Added role to ${member.id}`);
           }
         });
       });

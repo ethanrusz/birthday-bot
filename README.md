@@ -8,8 +8,10 @@ Create a `config.json` with sensitive data like your bot token and database cred
 
 ```json
 {
-  "clientID": "your-client-id-here",
-  "guildID": "your-guild-id-here",
-  "token": "your-token-here"
+  "clientID": "your-client-id",
+  "guildID": "your-guild-id",
+  "roleID": "your-role-id",
+  "token": "your-bot-token",
+  "uri": "your-database-uri"
 }
 ```

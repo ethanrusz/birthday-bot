@@ -1,8 +1,9 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { insertPerson, removePerson, updatePerson } = require("../database.js");
 
+// Configure birthday command
 module.exports = {
-  data: new SlashCommandBuilder() // Configure birthday command
+  data: new SlashCommandBuilder() 
     .setName("birthday")
     .setDescription("Alter birthdays")
     .addSubcommand((subcommand) =>

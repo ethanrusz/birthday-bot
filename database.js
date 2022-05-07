@@ -5,8 +5,9 @@ async function connectToCluster(uri) {
   let mongoClient;
 
   try {
+    // Connect to the cluster
     mongoClient = new MongoClient(uri);
-    await mongoClient.connect(); // Generate new connection to db
+    await mongoClient.connect();
 
     return mongoClient;
   } catch (error) {
@@ -23,10 +24,11 @@ async function insertPerson(snowflake, birthday) {
     const db = mongoClient.db("birthdaybot");
     const collection = db.collection("person");
 
+    // Insert document with snowflake and birthday
     await collection.insertOne({
       snowflake: snowflake,
       birthday: birthday,
-    }); // Insert new birthday
+    });
 
     console.log(`Added ${snowflake}`);
   } finally {
@@ -42,7 +44,8 @@ async function removePerson(snowflake) {
     const db = mongoClient.db("birthdaybot");
     const collection = db.collection("person");
 
-    await collection.deleteOne({ snowflake: snowflake }); // Delete document by snowflake
+    // Delete document by snowflake
+    await collection.deleteOne({ snowflake: snowflake });
 
     console.log(`Removed ${snowflake}`);
   } finally {
@@ -58,10 +61,11 @@ async function updatePerson(snowflake, birthday) {
     const db = mongoClient.db("birthdaybot");
     const collection = db.collection("person");
 
+    // Update birthday by snowflake
     await collection.findOneAndUpdate(
       { snowflake: snowflake },
       { $set: { birthday: birthday } }
-    ); // Update birthday by snowflake
+    );
 
     console.log(`Updated ${snowflake}`);
   } finally {
@@ -77,6 +81,7 @@ async function findByDate(day, month) {
     const db = mongoClient.db("birthdaybot");
     const collection = db.collection("person");
 
+    // Find snowflakes by projecting day and month
     let birthdayIDs = [];
     const cursor = collection.aggregate([
       {
@@ -89,11 +94,12 @@ async function findByDate(day, month) {
       {
         $match: { day: day, month: month },
       },
-    ]); // Find snowflakes by projecting day and month
+    ]);
 
+    // Get IDs from JSON
     await cursor.forEach((result) => {
       birthdayIDs.push(`${result.snowflake}`);
-    }); // Get IDs from json
+    });
 
     if (birthdayIDs.length === 0) {
       return null;
@@ -113,8 +119,8 @@ async function findByUser(snowflake) {
     const db = mongoClient.db("birthdaybot");
     const collection = db.collection("person");
 
-    const birthdayID = await collection.findOne({ snowflake: snowflake }); // Find document by snowflake
-    // return month name and day of birth from birthdayID no offset
+    // Find document by snowflake
+    const birthdayID = await collection.findOne({ snowflake: snowflake });
 
     if (birthdayID === null) {
       return null;
@@ -124,6 +130,7 @@ async function findByUser(snowflake) {
     const month = birthday.getUTCMonth();
     const day = birthday.getUTCDate();
 
+    // return month name and day of birth from birthdayID no offset
     return {
       month: [
         "January",

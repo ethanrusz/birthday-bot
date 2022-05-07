@@ -25,10 +25,11 @@ async function insertPerson(snowflake, birthday) {
     const collection = db.collection("person");
 
     // Insert document with snowflake and birthday
-    await collection.insertOne({
-      snowflake: snowflake,
-      birthday: birthday,
-    });
+    await collection.findOneAndUpdate(
+      { snowflake: snowflake },
+      { $set: { birthday: birthday } },
+      { upsert: true }
+    );
 
     console.log(`Added ${snowflake}`);
   } finally {

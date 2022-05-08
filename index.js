@@ -26,7 +26,7 @@ client.once("ready", () => {
   console.log("Ready!");
 
   // Nightly birthday job
-  cron.schedule("0 0 1 * * *", async () => {
+  cron.schedule("0 0 5 * * *", async () => {
     console.log("Running cron job");
 
     // Get guild from guildID

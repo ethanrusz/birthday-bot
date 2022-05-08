@@ -105,7 +105,7 @@ module.exports = {
       await updatePerson(user["id"], birthday);
       // Reply to whomever sent command
       await interaction.reply({
-        content: `Updated ${user} to the birthday database.`,
+        content: `Updated ${user} in the birthday database.`,
         ephemeral: true,
       });
     }
